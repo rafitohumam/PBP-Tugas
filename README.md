@@ -44,11 +44,11 @@ context = {
 }
 ```
 
-Pada file `views.py` ini ditambahkan beberapa *line*, yaitu 
+Pada file `views.py` ini ditambahkan beberapa *line*, yaitu:
 1. ```python
    from katalog.models import CatalogItem
    ```
-*Line* ini dibuat untuk mengambil data dari `models.py`
+*Line* ini dibuat untuk mengambil data dari `models.py`.
 
 2. ```python 
    def show_katalog(request):
@@ -60,7 +60,7 @@ Pada file `views.py` ini ditambahkan beberapa *line*, yaitu
     'npm' : '2106633626'
    }
    ```
-*Line* ini dibuat untuk mendefinisikan fungsi show_katalog dengan parameter `(request)` untuk melakukan *return* data dari database `models.py` dan di-*render* ke file *template* yaitu `katalog.html`. Data yang di-*render* berada pada variabel `context`, dimana berisi sebuah list barang katalog yang telah diimport dengan variabel `list_barang` dari `models.py` dan informasi nama serta npm.
+*Line* ini dibuat untuk mendefinisikan fungsi show_katalog dengan parameter `(request)` untuk melakukan *return* data dari database `models.py` dan di-*render* ke file *template* yaitu `katalog.html`. Data yang di-*render* berada pada variabel `context`, dimana berisi sebuah list barang katalog yang telah diimport dengan variabel `list_barang` dari `models.py` dan informasi nama serta NPM.
 
 ### urls.py
 
@@ -78,11 +78,11 @@ urlpatterns = [
 ]
 ```
 
-Pada file ini ditambahkan beberapa *line*, yaitu
+Pada file ini ditambahkan beberapa *line*, yaitu:
 1. ```python
    from katalog.views import show_katalog
    ```
-*Line* ini dibuat untuk memanggil fungsi `show_katalog` yang telah didefinisikan di `views.py`
+*Line* ini dibuat untuk memanggil fungsi `show_katalog` yang telah didefinisikan di `views.py`.
 
 2. ```python
    app_name = 'katalog'
