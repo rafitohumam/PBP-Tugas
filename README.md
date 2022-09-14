@@ -4,6 +4,7 @@
 ## PBP E
 
 Berikut saya lampirkan link dari aplikasi yang berhasil di-*deploy* ke Heroku.
+
 [LINK APLIKASI TUGAS 2](https://tugas2-rafitohumam.herokuapp.com/katalog/ "App Heroku Tugas 2 - Katalog")
 
 ## Cara Kerja Model, View, Template dari Django 
@@ -47,7 +48,7 @@ Pada file `views.py` ini ditambahkan beberapa *line*, yaitu
 1. ```python
    from katalog.models import CatalogItem
    ```
-⋅⋅*Line* ini dibuat untuk mengambil data dari `models.py`
+*Line* ini dibuat untuk mengambil data dari `models.py`
 
 2. ```python 
    def show_katalog(request):
@@ -59,7 +60,7 @@ Pada file `views.py` ini ditambahkan beberapa *line*, yaitu
     'npm' : '2106633626'
    }
    ```
-⋅⋅*Line* ini dibuat untuk mendefinisikan fungsi show_katalog dengan parameter `(request)` untuk melakukan *return* data dari database `models.py` dan di-*render* ke file *template* yaitu `katalog.html`. Data yang di-*render* berada pada variabel `context`, dimana berisi sebuah list barang katalog yang telah diimport dengan variabel `list_barang` dari `models.py` dan informasi nama serta npm.
+*Line* ini dibuat untuk mendefinisikan fungsi show_katalog dengan parameter `(request)` untuk melakukan *return* data dari database `models.py` dan di-*render* ke file *template* yaitu `katalog.html`. Data yang di-*render* berada pada variabel `context`, dimana berisi sebuah list barang katalog yang telah diimport dengan variabel `list_barang` dari `models.py` dan informasi nama serta npm.
 
 ### urls.py
 
@@ -81,7 +82,7 @@ Pada file ini ditambahkan beberapa *line*, yaitu
 1. ```python
    from katalog.views import show_katalog
    ```
-⋅⋅*Line* ini dibuat untuk memanggil fungsi `show_katalog` yang telah didefinisikan di `views.py`
+*Line* ini dibuat untuk memanggil fungsi `show_katalog` yang telah didefinisikan di `views.py`
 
 2. ```python
    app_name = 'katalog'
@@ -90,7 +91,7 @@ Pada file ini ditambahkan beberapa *line*, yaitu
     path('', show_katalog, name='show_katalog'),
    ]
    ```
-⋅⋅*Line* ini dibuat untuk mendefenisikan nama aplikasi di variabel `app_name` dengan nama katalog, serta mendaftarkan fungsi `show_katalog` di bawah variabel urlpatterns untuk mengarahkan *urls* ke fungsi yang tepat.
+*Line* ini dibuat untuk mendefenisikan nama aplikasi di variabel `app_name` dengan nama katalog, serta mendaftarkan fungsi `show_katalog` di bawah variabel urlpatterns untuk mengarahkan *urls* ke fungsi yang tepat.
 
 ### models.py
 
@@ -155,6 +156,7 @@ Setiap perubahan dari file - file yang disebutkan akan di-*tracking* dengan git 
 Untuk melakukan *deployment* ke aplikasi Heroku, diperlukan untuk membuat aplikasi Heroku terlebih dahulu dan melakukan *assignment* API *key* ke variabel *secret* dari repositori GitHub. Hal ini dilakukan karna konfigurasi *deploy* di file `dpl.yml` menggunakan variabel rahasia yang perlu diatur pada pengaturan repositori dengan variabel `HEROKU_API_KEY` dan `HEROKU_APP_NAME`. Jika kedua variabel ini sudah terdefinisi secara baik, maka *deployment* akan berjalan secara mandiri dan terlaksana dengan baik.
 
 Setelah *deployment* dilakukan, aplikasi katalog tersebut dapat diakses di link disini.
+
 [LINK APLIKASI TUGAS 2](https://tugas2-rafitohumam.herokuapp.com/katalog/ "App Heroku Tugas 2 - Katalog")
 
 ## Menggunakan Virtual Environment 
@@ -166,4 +168,4 @@ Walaupun sebenarnya sebuah aplikasi python dapat tetap dikembangkan di luar *vir
 ## Daftar Pustaka
 
 Template ini dibuat berdasarkan [Repositori Template Lab PBP](https://github.com/pbp-fasilkom-ui/assignment-repository).
-Beberapa materi didapat dari [Tutorial 1 PBP](https://pbp-fasilkom-ui.github.io/ganjil-2023/assignments/tutorial/tutorial-1) dan [Penjelasan Virtual Environment](https://towardsdatascience.com/why-you-should-use-a-virtual-environment-for-every-python-project-c17dab3b0fd0)
+Beberapa materi didapat dari [Tutorial 1 PBP](https://pbp-fasilkom-ui.github.io/ganjil-2023/assignments/tutorial/tutorial-1) dan [Penjelasan Virtual Environment](https://towardsdatascience.com/why-you-should-use-a-virtual-environment-for-every-python-project-c17dab3b0fd0).
