@@ -163,7 +163,7 @@ Setelah *deployment* dilakukan, aplikasi katalog tersebut dapat diakses di link 
 
 *Virtual environment* merupakan sebuah lingkungan *virtual* yang secara sengaja dibuat untuk menampung setiap pengembangan aplikasi python agar memiliki dependensi yang terpisah dari pengembangan-pengembangan yang lainnya. Hal ini berarti setiap *virtual environment* memiliki *requirements* atau persyaratannya masing-masing dalam berjalannya pengembangan. Mengembangkan suatu aplikasi python menggunakan sebuah lingkungan *virtual* akan mencegah adanya konflik yang terjadi karna irisan dari perbedaan konfigurasi, versi, maupun prasyarat pengembangan.
 
-Walaupun sebenarnya sebuah aplikasi python dapat tetap dikembangkan di luar *virtual environment*, namun resiko konflik yang dapat terjadi antar pengembangan akan sangat tinggi. Tentu ini tidak sebanding dengan hanya membuat sebuah lingkungan *virtual* secara *bespoke* agar setiap aplikasi memiliki dependensi untuk dikembangkan secara aman dan tanpa konflik.
+Walaupun sebenarnya sebuah aplikasi python dapat tetap dikembangkan di luar *virtual environment*, namun risiko konflik yang dapat terjadi antar pengembangan akan sangat tinggi. Tentu ini tidak sebanding dengan hanya membuat sebuah lingkungan *virtual* secara *bespoke* agar setiap aplikasi memiliki dependensi untuk dikembangkan secara aman dan tanpa konflik.
 
 ## Daftar Pustaka
 
