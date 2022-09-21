@@ -7,8 +7,3 @@ class MyWatchList(models.Model):
     rating = models.FloatField()
     release_date = models.DateField()
     review = models.TextField()
-    # item_price = models.BigIntegerField()
-    # item_stock = models.IntegerField()
-    # description = models.TextField()
-    # rating = models.IntegerField()
-    # item_url = models.URLField()
