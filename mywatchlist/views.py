@@ -28,10 +28,6 @@ def watch_count(content):
     else:
         content["movie_count"] = "Wah, kamu masih sedikit menonton!"
 
-def show_html(request):
-    data_watchlist = MyWatchList.objects.all()
-    return HttpResponse(serializers.serialize("html", data_watchlist), content_type="application/html")
-
 def show_xml(request):
     data_watchlist = MyWatchList.objects.all()
     return HttpResponse(serializers.serialize("xml", data_watchlist), content_type="application/xml")

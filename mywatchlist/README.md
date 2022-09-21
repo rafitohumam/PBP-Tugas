@@ -5,11 +5,11 @@
 
 Berikut saya lampirkan link dari aplikasi yang berhasil di-*deploy* ke Heroku.
 
-[LINK APLIKASI TUGAS 2](https://tugas2-rafitohumam.herokuapp.com/katalog/ "App Heroku Tugas 2 - Katalog")
+[LINK APLIKASI TUGAS 3](https://tugas3-rafitohumam.herokuapp.com/mywatchlist/ "App Heroku Tugas 3 - Watchlist")
 
-## Cara Kerja Model, View, Template dari Django 
+## Perbedaan JSON, XML, dan HTML
 
-![alt text](baganreadme.jpg "Bagan Tugas 2")
+JSON (*JavaScript Object Notation*), XML (*Extensible Markup Language*), dan HTML (*HyperText Markup Language*) merupakan jenis bahasa yang digunakan untuk melakukan *data delivery* 
 
 Bagan di atas merupakan penggambaran implementasi dari struktur MVT (Model-View-Template) dari Django, khususnya pada Tugas 2. Pada awalnya, *user* sebagai *client* dari server Django akan melakukan sebuah permintaan yang ditangkap oleh `urls.py`. Kemudian, `urls.py` akan meneruskan permintaan tersebut kepada `views.py` dengan serangkaian fungsi yang didefinisikan oleh *developer* di dalam `views.py`. Sesuai dengan permintaan dan jalannya program, `views.py` akan melakukan pengambilan data berupa *query* ke `models.py` dan dikembalikan langsung ke `views.py`. Setelah permintaan tersebut berhasil dilaksanakan, maka program tersebut akan memetakan data tersebut ke sebuah *template*, dalam kasus ini diwakilkan oleh `katalog.html`, dan pada akhirnya dikembalikan ke *user* sebagai sebuah respons yang sesuai.
 
