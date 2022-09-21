@@ -9,112 +9,173 @@ Berikut saya lampirkan link dari aplikasi yang berhasil di-*deploy* ke Heroku.
 
 ## Perbedaan JSON, XML, dan HTML
 
-JSON (*JavaScript Object Notation*), XML (*Extensible Markup Language*), dan HTML (*HyperText Markup Language*) merupakan jenis bahasa yang digunakan untuk melakukan *data delivery* dari sebuah aplikasi berstruktur MVT yang 
+JSON (*JavaScript Object Notation*), XML (*Extensible Markup Language*), dan HTML (*HyperText Markup Language*) merupakan jenis bahasa yang digunakan untuk melakukan *data delivery* sebagai template dari sebuah aplikasi berstruktur MVT. Ketiga jenis tersebut merupakan sebuah pemetaan dari *query* dengan struktur pembahasan yang berbeda. Pada *website* umumnya, pemetaan *models* dilakukan dengan HTML.
 
-Bagan di atas merupakan penggambaran implementasi dari struktur MVT (Model-View-Template) dari Django, khususnya pada Tugas 2. Pada awalnya, *user* sebagai *client* dari server Django akan melakukan sebuah permintaan yang ditangkap oleh `urls.py`. Kemudian, `urls.py` akan meneruskan permintaan tersebut kepada `views.py` dengan serangkaian fungsi yang didefinisikan oleh *developer* di dalam `views.py`. Sesuai dengan permintaan dan jalannya program, `views.py` akan melakukan pengambilan data berupa *query* ke `models.py` dan dikembalikan langsung ke `views.py`. Setelah permintaan tersebut berhasil dilaksanakan, maka program tersebut akan memetakan data tersebut ke sebuah *template*, dalam kasus ini diwakilkan oleh `katalog.html`, dan pada akhirnya dikembalikan ke *user* sebagai sebuah respons yang sesuai.
+Adapun perbedaan JSON, XML, dan HTML terdapat di struktural dan *formatting* *data delivery* dari sebuah *content*. HTML, berjenis *Markup Language* dengan ciri-ciri menggunakan tag (<) atau (>) yang digunakan untuk menentukan urutan urgensi teks dan tampilannya. HTML dapat lebih mudah dikostumisasi secara visual dan akan lebih memanjakan mata *user*. HTML bersifat *case insensitive*.
 
-## Implementasi Poin 1 Hingga 4
+Sementara itu, XML yaitu *Extensible Markup Language* didesain menjadi suatu bahasa *markup* yang terstruktur dan *self-descriptive*. Ciri khas dari XML adalah membentuk sebuah "pohon" pada bahasa tersebut yang berurutan dari akar, batang, dan para ranting. XML akan membuat *user* dan komputer lebih mudah mengerti untuk tentang informasi yang hendak disampaikan oleh aplikasi tersebut. XML umumnya digunakan untuk mengirimkan atau menyimpan data pada banyak aplikasi. XML bersifat *case sensitive*
 
-Sesuai dari *template* soal Tugas 2 yang diberikan, terdapat empat poin yang dititikberatkan untuk mempersiapkan aplikasi hingga melakukan *deployment*, yaitu:
+Berbeda dengan XML, JSON atau *JavaScript Object Notation* didesain menjadi suatu bahasa, sebuah format data dengan sebuah *text* yang *self-describing* sehingga memiliki tingkat efisiensi penempatan elemen yang lebih tinggi dibandingkan XML. JSON menempatkan elemen dalam dua bentuk, yaitu *key* dan *value* dan mmeiliki tendensi untuk lebih ringkas dan cepat dibandingkan XML.
 
-1. Membuat sebuah fungsi pada `views.py` yang dapat melakukan pengambilan data dari model dan dikembalikan ke dalam sebuah HTML.
-2. Membuat sebuah routing untuk memetakan fungsi yang telah kamu buat pada views.py.
-3. Memetakan data yang didapatkan ke dalam HTML dengan sintaks dari Django untuk pemetaan data template.
-4. Melakukan deployment ke Heroku terhadap aplikasi yang sudah kamu buat sehingga nantinya dapat diakses oleh teman-temanmu melalui Internet.
+## Perlunya Data Delivery Dalam Pengimplementasian Sebuah Platform
 
-Pada awal mula, perlu dilakukan *cloning template* repositori dari *source code* tugas lab yang diberikan di GitHub ke sebuah repositori baru. Kemudian, *clone* repositori tersebut ke *local disk* sehingga dapat diakses secara lokal. Jika dilihat, sudah terdapat aplikasi lokal yang dibuat di terminal bernama katalog.
+Hal ini harus dikembalikan pada esensi aplikasi dengan tipe MVT atau *Model-View-Template* Pada awalnya, *user* sebagai *client* dari server Django akan melakukan sebuah permintaan yang ditangkap oleh `urls.py`. Kemudian, `urls.py` akan meneruskan permintaan tersebut kepada `views.py` dengan serangkaian fungsi yang didefinisikan oleh *developer* di dalam `views.py`. Sesuai dengan permintaan dan jalannya program, `views.py` akan melakukan pengambilan data berupa *query* ke `models.py` dan dikembalikan langsung ke `views.py`. Setelah permintaan tersebut berhasil dilaksanakan, maka program tersebut akan memetakan data tersebut ke sebuah *template*, dalam kasus ini diwakilkan oleh `katalog.html`, dan pada akhirnya dikembalikan ke *user* sebagai sebuah respons yang sesuai.
+
+Aplikasi dengan tipe MVT ini menjadi suatu landasan berfikir dalam konsep pembuatan *platform* dasar. Implementasi *data delivery* pada sebuah *platform* memiliki peran yang sangat penting karena *platform* secara kontinu akan melakukan transfer data antar *user*, *client*, dan *server*. Proses ini akan sangat dipermudah ketika *delivery* dari data yang diantisipasi dapat secara konsisten memiliki format yang sama. Sesuai dengan kebutuhan efisiensi setiap *platform*, maka pemilihan format *delivery* harus diperhitungkan secara benar antara HTML, XML, maupun JSON.
+
+## Implementasi Alur Tugas
+
+Pada awal mula, perlu didefinisikan sebuah aplikasi baru pada repositori lokal. Hal ini dapat dilakukan dengan mengetikkan *command* berikut:
+```shell
+python3 manage.py startapp mywatchlist
+```
+di dalam sebuah *virtual environment* yang telah dijalankan dengan perintah:
+```shell
+source env/bin/activate
+```
+
+Setelah ini dilakukan, maka dalam repositori lokal akan terbentuk sebuah folder aplikasi bernama `mywatchlist`.
+
+Selanjutnya tambahkan path mywatchlist di `urls.py` yang berada di folder `prodject_django` seperti berikut:
+```shell
+urlpatterns = [ ... path('mywatchlist/', include('mywatchlist.urls')), ]
+```
+Dan tambahkan di `INSTALLED_APPS` pada file `settings.py` dengan kode:
+```shell
+INSTALLED_APPS = [ 
+..., 
+'mywatchlist', 
+]
+```
+
+Kemudian, lakukan setup untuk aplikasi tersebut dengan melakukan beberapa perubahan ke file berikut:
 
 ### views.py
 
-Pertama, lakukan penyuntingan pada file `views.py` untuk melakukan pengambilan data dari `models.py` dan dipetakan ke *template* dalam file HTML.
+Penyuntingan pada file `views.py` untuk melakukan pengambilan data dari `models.py` dan dipetakan ke *template* dalam file HTML ataupun XML dan JSON dengan *serializer*. Selain itu, dibuat juga sebuah fungsi `watch_count` untuk mengimplementasi soal bonus yang mengeluarkan *output* berdasarkan jumlah film yang tertonton, seperti berikut:
 
 ```python
 from django.shortcuts import render
-from katalog.models import CatalogItem
+from mywatchlist.models import MyWatchList
+from django.http import HttpResponse
+from django.core import serializers
 
-def show_katalog(request):
-    return render(request, "katalog.html", context)
+def show_watchlist(request):
+    data_watchlist = MyWatchList.objects.all()
+    context = {
+    "list_film": data_watchlist,
+    "nama": "Rafito Humam",
+    "npm" : "2106633626",
+    "watched_count": 0,
+    "not_watched_count": 0,
+    "movie_count": ""
+    }
+    watch_count(context)
+    return render(request, "mywatchlist.html", context)
 
-data_barang_katalog = CatalogItem.objects.all()
+def watch_count(content):
+    for i in content.get("list_film"):
+        if i.watched == True:
+            content["watched_count"] += 1
+        if i.watched == False:
+            content["not_watched_count"] += 1
+    if content["watched_count"] >= content["not_watched_count"]:
+        content["movie_count"] = "Selamat, kamu sudah banyak menonton!"
+    else:
+        content["movie_count"] = "Wah, kamu masih sedikit menonton!"
 
-context = {
-    'list_barang': data_barang_katalog,
-    'nama': 'Rafito Humam',
-    'npm' : '2106633626'
-}
+def show_xml(request):
+    data_watchlist = MyWatchList.objects.all()
+    return HttpResponse(serializers.serialize("xml", data_watchlist), content_type="application/xml")
+
+def show_json(request):
+    data_watchlist = MyWatchList.objects.all()
+    return HttpResponse(serializers.serialize("json", data_watchlist), content_type="application/json")
+
+def show_xml_id(request, id):
+    data_watchlist = MyWatchList.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("xml", data_watchlist), content_type="application/xml")
+
+def show_json_id(request, id):
+    data_watchlist = MyWatchList.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data_watchlist), content_type="application/json")
+```
+### models.py
+
+Kemudian, ada file `models.py` yang berfungsi untuk mendefinisikan setiap model berupa atribut-atribut yang diesuaikan pada soal seperti *watched*, *title*, *rating*, *release_date*, dan *review* dengan field yang sesuai masing-masing. Atribut ini nantinya akan digunakan  pada file `initial_watchlist_data.json` pada folder `fixtures`.
+
+```python
+from django.db import models
+
+class MyWatchList(models.Model):
+    watched = models.BooleanField()
+    title = models.CharField(max_length=255)
+    rating = models.FloatField()
+    release_date = models.DateField()
+    review = models.TextField()
 ```
 
-Pada file `views.py` ini ditambahkan beberapa *line*, yaitu:
-1. ```python
-   from katalog.models import CatalogItem
-   ```
-*Line* ini dibuat untuk mengambil data dari `models.py`.
+Setelah itu, tidak lupa melakukan migrasi dengan menjalankan kode berikut:
+```shell 
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
 
-2. ```python 
-   def show_katalog(request):
-      return render(request, "katalog.html", context)
+### initial_watchlist_data.json
 
-   context = {
-    'list_barang': data_barang_katalog,
-    'nama': 'Rafito Humam',
-    'npm' : '2106633626'
-   }
-   ```
-*Line* ini dibuat untuk mendefinisikan fungsi show_katalog dengan parameter `(request)` untuk melakukan *return* data dari database `models.py` dan di-*render* ke file *template* yaitu `katalog.html`. Data yang di-*render* berada pada variabel `context`, dimana berisi sebuah list barang katalog yang telah diimport dengan variabel `list_barang` dari `models.py` dan informasi nama serta NPM.
+Pada file ini, didefinisikan data tentang `watchlist` yang nantinya akan ditampilkan di dalam web tentang film (minimal 10). Atribut yang digunakan harus sesuai dengan yang didefinisikan pada `models.py`, seperti berikut:
+
+```
+[
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 1,
+        "fields": {
+            "watched": true,
+            "title": "Fast and Furious: Tokyo Drift",
+            "rating": 5.0,
+            "release_date": "2006-08-03",
+            "review": "Actually one of the most underrated Fast and Furious movies of all time."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 2,
+        "fields": {
+            "watched": false,
+            "title": "365 Days",
+            "rating": 4.6,
+            "release_date": "2020-02-07",
+            "review": "Romantic, sexy, and very intriguing movie rated for adults."
+        }
+    },
+...
+```
 
 ### urls.py
 
 Untuk melakukan *routing* dari fungsi yang terdapat `views.py` tersebut, perlu dilakukan konfigurasi dari `urls.py` yang dalam bentuk final memiliki isi sebagai berikut:
 
-`urls.py` pada folder `katalog`
+`urls.py` pada folder `mywatchlist`
 ```python
-from django.urls import path
-from katalog.views import show_katalog
-
-app_name = 'katalog'
+app_name = "mywatchlist"
 
 urlpatterns = [
-    path('', show_katalog, name='show_katalog'),
+    path("", show_watchlist, name="show_watchlist"),
+    path("html/", show_watchlist, name="show_watchlist"),
+    path("xml/", show_xml, name="show_xml"),
+    path("json/", show_json, name="show_json"),
+    path("xml/<int:id>", show_xml_id, name="show_xml_id"),
+    path("json/<int:id>", show_json_id, name="show_json_id"),
 ]
 ```
 
-Pada file ini ditambahkan beberapa *line*, yaitu:
-1. ```python
-   from katalog.views import show_katalog
-   ```
-*Line* ini dibuat untuk memanggil fungsi `show_katalog` yang telah didefinisikan di `views.py`.
+### mywatchlist.html (template)
 
-2. ```python
-   app_name = 'katalog'
-
-   urlpatterns = [
-    path('', show_katalog, name='show_katalog'),
-   ]
-   ```
-*Line* ini dibuat untuk mendefenisikan nama aplikasi di variabel `app_name` dengan nama katalog, serta mendaftarkan fungsi `show_katalog` di bawah variabel urlpatterns untuk mengarahkan *urls* ke fungsi yang tepat.
-
-### models.py
-
-Kemudian, ada file `models.py` yang berfungsi untuk mendefinisikan setiap *database* berupa variabel-variabel yang berada pada file `initial_catalog_data.json` dalam sebuah class bernama `CatalogItem`.
-
-```python
-from django.db import models
-
-class CatalogItem(models.Model):
-    item_name = models.CharField(max_length=255)
-    item_price = models.BigIntegerField()
-    item_stock = models.IntegerField()
-    description = models.TextField()
-    rating = models.IntegerField()
-    item_url = models.URLField()
-```
-
-### katalog.html (template)
-
-Finalisasi terakhir dilakukan dengan menambahkan *loop* ke file `katalog.html` seperti berikut:
+Finalisasi terakhir dilakukan dengan mengkostumisasi file html agar dapat dipetakan dengan baik dalam web, selain itu ditampilkan juga variabel `movie_count` sebagai pemberitahu tentang banyaknya film yang telah ditonton, sebagai berikut:
 
 ```shell
-<h1>Tugas 2 Assignment PBP/PBD</h1>
+  <h1>Tugas 3 Assignment PBP/PBD</h1>
 
   <h5>Name: </h5>
   <p>{{nama}}</p>
@@ -122,32 +183,31 @@ Finalisasi terakhir dilakukan dengan menambahkan *loop* ke file `katalog.html` s
   <h5>Student ID: </h5>
   <p>{{npm}}</p>
 
+  <p>{{movie_count}}</p>
+
   <table>
     <tr>
       <tr></tr>
-      <th>Item Name</th>
-      <th>Item Price</th>
-      <th>Item Stock</th>
+      <th>Watched</th>
+      <th>Title</th>
       <th>Rating</th>
-      <th>Description</th>
-      <th>Item URL</th>
+      <th>Release Date</th>
+      <th>Review</th>
     </tr>
     {% comment %} Add the data below this line {% endcomment %}
     {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
-    {% for barang in list_barang %}
+    {% for film in list_film %}
         <tr>
-            <th>{{barang.item_name}}</th>
-            <th>{{barang.item_price}}</th>
-            <th>{{barang.item_stock}}</th>
-            <th>{{barang.rating}}</th>
-            <th>{{barang.description}}</th>
-            <th>{{barang.item_url}}</th>
+            <th>{{film.watched}}</th>
+            <th>{{film.title}}</th>
+            <th>{{film.rating}}</th>
+            <th>{{film.release_date}}</th>
+            <th>{{film.review}}</th>
         </tr>
   {% endfor %}
   </table>
+ {% endblock content %}
   ```
-
-  Loop yang ditambahkan tersebut berfungsi untuk menampung variabel-variabel katalog yang telah didefinisikan pada `views.py` serta data mengenai nama, harga, stok, rating, deskripsi, dan url setiap iterasi barang yang ditemukan di *range loop* `list_barang`. Kemudian, file `katalog.html` tersebut digunakan untuk menampilan informasi ke user.
 
 ### Deployment ke Aplikasi Heroku
 
@@ -155,17 +215,11 @@ Setiap perubahan dari file - file yang disebutkan akan di-*tracking* dengan git 
 
 Untuk melakukan *deployment* ke aplikasi Heroku, diperlukan untuk membuat aplikasi Heroku terlebih dahulu dan melakukan *assignment* API *key* ke variabel *secret* dari repositori GitHub. Hal ini dilakukan karna konfigurasi *deploy* di file `dpl.yml` menggunakan variabel rahasia yang perlu diatur pada pengaturan repositori dengan variabel `HEROKU_API_KEY` dan `HEROKU_APP_NAME`. Jika kedua variabel ini sudah terdefinisi secara baik, maka *deployment* akan berjalan secara mandiri dan terlaksana dengan baik.
 
-Setelah *deployment* dilakukan, aplikasi katalog tersebut dapat diakses di link disini.
+Setelah *deployment* dilakukan, aplikasi watchlist tersebut dapat diakses di link disini.
 
-[LINK APLIKASI TUGAS 2](https://tugas2-rafitohumam.herokuapp.com/katalog/ "App Heroku Tugas 2 - Katalog")
-
-## Menggunakan Virtual Environment 
-
-*Virtual environment* merupakan sebuah lingkungan *virtual* yang secara sengaja dibuat untuk menampung setiap pengembangan aplikasi python agar memiliki dependensi yang terpisah dari pengembangan-pengembangan yang lainnya. Hal ini berarti setiap *virtual environment* memiliki *requirements* atau persyaratannya masing-masing dalam berjalannya pengembangan. Mengembangkan suatu aplikasi python menggunakan sebuah lingkungan *virtual* akan mencegah adanya konflik yang terjadi karna irisan dari perbedaan konfigurasi, versi, maupun prasyarat pengembangan.
-
-Walaupun sebenarnya sebuah aplikasi python dapat tetap dikembangkan di luar *virtual environment*, namun risiko konflik yang dapat terjadi antar pengembangan akan sangat tinggi. Tentu ini tidak sebanding dengan hanya membuat sebuah lingkungan *virtual* secara *bespoke* agar setiap aplikasi memiliki dependensi untuk dikembangkan secara aman dan tanpa konflik.
+[LINK APLIKASI TUGAS 3](https://tugas3-rafitohumam.herokuapp.com/mywatchlist/ "App Heroku Tugas 3 - Watchlist")
 
 ## Daftar Pustaka
 
 Template ini dibuat berdasarkan [Repositori Template Lab PBP](https://github.com/pbp-fasilkom-ui/assignment-repository).
-Beberapa materi didapat dari [Tutorial 1 PBP](https://pbp-fasilkom-ui.github.io/ganjil-2023/assignments/tutorial/tutorial-1) dan [Penjelasan Virtual Environment](https://towardsdatascience.com/why-you-should-use-a-virtual-environment-for-every-python-project-c17dab3b0fd0).
+Beberapa materi didapat dari [Perbedaan HTML, XML, dan JSON](https://medium.com/@oazzat19/what-is-the-difference-between-html-vs-xml-vs-json-254864972bbb).

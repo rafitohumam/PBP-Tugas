@@ -2,7 +2,7 @@ from django.urls import path
 from mywatchlist.views import show_watchlist
 from mywatchlist.views import show_xml, show_json, show_xml_id, show_json_id
 
-app_name =  "mywatchlist"
+app_name = "mywatchlist"
 
 urlpatterns = [
     path("", show_watchlist, name="show_watchlist"),
