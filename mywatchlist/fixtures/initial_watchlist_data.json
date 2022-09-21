@@ -1,0 +1,112 @@
+[
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 1,
+        "fields": {
+            "watched": true,
+            "title": "Fast and Furious: Tokyo Drift",
+            "rating": 5.0,
+            "release_date": "2006-08-03",
+            "review": "Actually one of the most underrated Fast and Furious movies of all time."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 2,
+        "fields": {
+            "watched": false,
+            "title": "365 Days",
+            "rating": 4.6,
+            "release_date": "2020-02-07",
+            "review": "Romantic, sexy, and very intriguing movie rated for adults."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 3,
+        "fields": {
+            "watched": true,
+            "title": "Spider-Man: No Way Home",
+            "rating": 4.8,
+            "release_date": "2021-12-13",
+            "review": "This has a really good plot, fantastic superhero movie."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 4,
+        "fields": {
+            "watched": true,
+            "title": "13 Reasons Why",
+            "rating": 4.0,
+            "release_date": "2006-05-31",
+            "review": "One of the fascinating highschool murder series."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 5,
+        "fields": {
+            "watched": false,
+            "title": "Mencuri Raden Saleh",
+            "rating": 5.0,
+            "release_date": "2022-08-25",
+            "review": "This is a really great eye-pleasing escapism."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 6,
+        "fields": {
+            "watched": false,
+            "title": "Nenek Gayung",
+            "rating": 2.3,
+            "release_date": "2012-04-19",
+            "review": "The horror part is not scary at all and the comedy part is cringey."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 7,
+        "fields": {
+            "watched": true,
+            "title": "Laskar Pelangi",
+            "rating": 5.0,
+            "release_date": "2008-09-25",
+            "review": "This story is full of adventure and drama and real good acting."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 8,
+        "fields": {
+            "watched": true,
+            "title": "Fast Five",
+            "rating": 4.6,
+            "release_date": "2011-04-29",
+            "review": "The story is predictable but a lot of fun! "
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 9,
+        "fields": {
+            "watched": false,
+            "title": "Superman",
+            "rating": 4.3,
+            "release_date": "1978-12-13",
+            "review": "The film only be described as a medley of magic and exhilaration beyond belief."
+        }
+    },
+    {
+        "model": "mywatchlist.MyWatchList",
+        "pk": 10,
+        "fields": {
+            "watched": true,
+            "title": "Man Of Steel",
+            "rating": 4.9,
+            "release_date": "2013-06-13",
+            "review": "Probably one of the most underrated DC movies to date."
+        }
+    }
+]

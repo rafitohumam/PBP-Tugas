@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+ {% block content %}
+ <style>
+  table, th, td {
+  border: 1px solid rgb(0, 0, 0);
+  }
+  tr {background-color: rgba(0, 0, 0, 0.395);}
+
+  body{
+    color: rgb(255, 255, 255);
+  }
+</style>
+
+  <h1>Tugas 3 Assignment PBP/PBD</h1>
+
+  <h5>Name: </h5>
+  <p>{{nama}}</p>
+
+  <h5>Student ID: </h5>
+  <p>{{npm}}</p>
+
+  <p>{{movie_count}}</p>
+
+  <table>
+    <tr>
+      <tr></tr>
+      <th>Watched</th>
+      <th>Title</th>
+      <th>Rating</th>
+      <th>Release Date</th>
+      <th>Review</th>
+    </tr>
+    {% comment %} Add the data below this line {% endcomment %}
+    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+    {% for film in list_film %}
+        <tr>
+            <th>{{film.watched}}</th>
+            <th>{{film.title}}</th>
+            <th>{{film.rating}}</th>
+            <th>{{film.release_date}}</th>
+            <th>{{film.review}}</th>
+        </tr>
+  {% endfor %}
+  </table>
+
+ {% endblock content %}
