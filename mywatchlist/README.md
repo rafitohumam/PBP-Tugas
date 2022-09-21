@@ -224,13 +224,13 @@ Setelah *deployment* dilakukan, aplikasi watchlist tersebut dapat diakses di lin
 Berikut adalah screenshot dari postman setiap link:
 
 HTML
-![alt text](html.jpg "HTML")
+![alt text](html.png "HTML")
 
 XML
-![alt text](xml.jpg "XML")
+![alt text](xml.png "XML")
 
 JSON
-![alt text](json.jpg "JSON")
+![alt text](json.png "JSON")
 
 ## Daftar Pustaka
 
