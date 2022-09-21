@@ -13,7 +13,7 @@ JSON (*JavaScript Object Notation*), XML (*Extensible Markup Language*), dan HTM
 
 Adapun perbedaan JSON, XML, dan HTML terdapat di struktural dan *formatting* *data delivery* dari sebuah *content*. HTML, berjenis *Markup Language* dengan ciri-ciri menggunakan tag (<) atau (>) yang digunakan untuk menentukan urutan urgensi teks dan tampilannya. HTML dapat lebih mudah dikostumisasi secara visual dan akan lebih memanjakan mata *user*. HTML bersifat *case insensitive*.
 
-Sementara itu, XML yaitu *Extensible Markup Language* didesain menjadi suatu bahasa *markup* yang terstruktur dan *self-descriptive*. Ciri khas dari XML adalah membentuk sebuah "pohon" pada bahasa tersebut yang berurutan dari akar, batang, dan para ranting. XML akan membuat *user* dan komputer lebih mudah mengerti untuk tentang informasi yang hendak disampaikan oleh aplikasi tersebut. XML umumnya digunakan untuk mengirimkan atau menyimpan data pada banyak aplikasi. XML bersifat *case sensitive*
+Sementara itu, XML yaitu *Extensible Markup Language* didesain menjadi suatu bahasa *markup* yang terstruktur dan *self-descriptive*. Ciri khas dari XML adalah membentuk sebuah "pohon" pada bahasa tersebut yang berurutan dari akar, batang, dan para ranting. XML akan membuat *user* dan komputer lebih mudah mengerti untuk tentang informasi yang hendak disampaikan oleh aplikasi tersebut. XML umumnya digunakan untuk mengirimkan atau menyimpan data pada banyak aplikasi. XML bersifat *case sensitive*.
 
 Berbeda dengan XML, JSON atau *JavaScript Object Notation* didesain menjadi suatu bahasa, sebuah format data dengan sebuah *text* yang *self-describing* sehingga memiliki tingkat efisiensi penempatan elemen yang lebih tinggi dibandingkan XML. JSON menempatkan elemen dalam dua bentuk, yaitu *key* dan *value* dan mmeiliki tendensi untuk lebih ringkas dan cepat dibandingkan XML.
 
@@ -218,6 +218,19 @@ Untuk melakukan *deployment* ke aplikasi Heroku, diperlukan untuk membuat aplika
 Setelah *deployment* dilakukan, aplikasi watchlist tersebut dapat diakses di link disini.
 
 [LINK APLIKASI TUGAS 3](https://tugas3-rafitohumam.herokuapp.com/mywatchlist/ "App Heroku Tugas 3 - Watchlist")
+
+## Screenshot Postman
+
+Berikut adalah screenshot dari postman setiap link:
+
+HTML
+![alt text](html.jpg "HTML")
+
+XML
+![alt text](xml.jpg "XML")
+
+JSON
+![alt text](json.jpg "JSON")
 
 ## Daftar Pustaka
 
