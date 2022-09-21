@@ -1,5 +1,6 @@
 from django.db import models
 
+# Fix 1
 # Create your models here.
 class MyWatchList(models.Model):
     watched = models.BooleanField()
