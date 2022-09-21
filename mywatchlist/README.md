@@ -9,7 +9,7 @@ Berikut saya lampirkan link dari aplikasi yang berhasil di-*deploy* ke Heroku.
 
 ## Perbedaan JSON, XML, dan HTML
 
-JSON (*JavaScript Object Notation*), XML (*Extensible Markup Language*), dan HTML (*HyperText Markup Language*) merupakan jenis bahasa yang digunakan untuk melakukan *data delivery* 
+JSON (*JavaScript Object Notation*), XML (*Extensible Markup Language*), dan HTML (*HyperText Markup Language*) merupakan jenis bahasa yang digunakan untuk melakukan *data delivery* dari sebuah aplikasi berstruktur MVT yang 
 
 Bagan di atas merupakan penggambaran implementasi dari struktur MVT (Model-View-Template) dari Django, khususnya pada Tugas 2. Pada awalnya, *user* sebagai *client* dari server Django akan melakukan sebuah permintaan yang ditangkap oleh `urls.py`. Kemudian, `urls.py` akan meneruskan permintaan tersebut kepada `views.py` dengan serangkaian fungsi yang didefinisikan oleh *developer* di dalam `views.py`. Sesuai dengan permintaan dan jalannya program, `views.py` akan melakukan pengambilan data berupa *query* ke `models.py` dan dikembalikan langsung ke `views.py`. Setelah permintaan tersebut berhasil dilaksanakan, maka program tersebut akan memetakan data tersebut ke sebuah *template*, dalam kasus ini diwakilkan oleh `katalog.html`, dan pada akhirnya dikembalikan ke *user* sebagai sebuah respons yang sesuai.
 
