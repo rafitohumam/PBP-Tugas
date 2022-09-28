@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+ {% block content %}
+ <style>
+  table, th, td {
+  border: 1px solid rgb(0, 0, 0);
+  }
+  tr {background-color: rgba(0, 0, 0, 0.395);}
+
+  body{
+    color: rgb(255, 255, 255);
+  }
+</style>
+
+  <h1>Tugas 4 Assignment PBP/PBD</h1>
+
+  <h5>Name: </h5>
+  <p>{{username}}</p>
+
+  <button><a href="{% url 'todolist:create_task' %}">Create New Task</a></button>
+  
+  <table>
+    <tr>
+      <tr></tr>
+      <th>Tanggal</th>
+      <th>Judul Task</th>
+      <th>Deskripsi</th>
+    </tr>
+    {% comment %} Add the data below this line {% endcomment %}
+    {% for task in alltask %}
+    <tr>
+      <th>{{task.date}}</th>
+      <th>{{task.title}}</th>
+      <th>{{task.description}}</th>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <h5>Sesi terakhir login: {{ last_login }}</h5>
+
+  <button><a href="{% url 'todolist:logout' %}">Logout</a></button>
+
+ {% endblock content %}
