@@ -299,6 +299,16 @@ Setelah *deployment* dilakukan, aplikasi katalog tersebut dapat diakses di link 
 
 [LINK APLIKASI TUGAS 4](https://tugas3-rafitohumam.herokuapp.com/todolist/ "App Heroku Tugas 4 - Katalog")
 
+Adapaun untuk test, saya telah membuat dua akun dummy dan telah membuat tiga task yang dapat diakses dengan *credentials* seperti berikut:
+
+```shell
+username: dummy1
+password: rafitomanis234
+
+username: dummy2
+password: rafitomanis234
+```
+
 ## Daftar Pustaka
 
 Template ini dibuat berdasarkan [Repositori Template Lab PBP](https://github.com/pbp-fasilkom-ui/assignment-repository).
