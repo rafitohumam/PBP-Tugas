@@ -11,6 +11,7 @@ from todolist.forms import TaskForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+# Create your views here
 @login_required(login_url='/todolist/login/')
 def show_todolist(request):
     context = {
@@ -31,7 +32,6 @@ def create_task(request):
         return response
 
     context = {'form': form}
-
     return render(request, "new_task.html", context)
 
 def register(request):
@@ -64,5 +64,3 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('todolist:login'))
     response.delete_cookie('last_login')
     return response
-
-# Create your views here.
