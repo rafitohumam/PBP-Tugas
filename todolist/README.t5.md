@@ -1,4 +1,4 @@
-# Assignment - Tugas 4
+# Assignment - Tugas 5
 
 ## Rafito Humam Abrar - 2106633626
 ## PBP E
@@ -7,40 +7,121 @@
 
 Berikut saya lampirkan link dari aplikasi yang berhasil di-*deploy* ke Heroku.
 
-[LINK APLIKASI TUGAS 4](https://tugas3-rafitohumam.herokuapp.com/todolist/ "App Heroku Tugas 4 - todolist")
+[LINK APLIKASI TUGAS 5](https://tugas3-rafitohumam.herokuapp.com/todolist/ "App Heroku Tugas 5 - todolist")
 
-## Apa kegunaan `{% csrf_token %}` pada elemen <form>? Apa yang terjadi apabila tidak ada potongan kode tersebut pada elemen <form>?
+## Apa perbedaan dari Inline, Internal, dan External CSS? Apa saja kelebihan dan kekurangan dari masing-masing style?
 
-CSRF Token merupakan sebuah potongan token random yang dibuat untuk mencegah serangan CSRF atau *Cross Site Request Forgery*. Potongan kode `{% csrf_token %}` akan men-*generate* token dari server dan akan melakukan *cross-checking* dari setiap request yang masuk dan hanya menjalankan yang memiliki token sesuai. Selain itu, tidak akan diekskusi untuk menjamin keamanan dari data *user*.
+CSS atau *Cascading Style Sheets* merupakan sebuah bahasa yang berfungsi menentukan format visual suatu website berdasar *markup language* seperti HTML maupun XML agar memiliki tampilan yang lebih memanjakan mata pengguna. Adapun cara implementasi dari CSS terbagi menjadi tiga jenis, yaitu *Inline CSS*, *Internal CSS*, serta *External CSS*.
 
-Jika tidak ada potongan kode tersebut di bawah elemen `<form>`, khususnya dalam metode POST, maka aplikasi akan me-*return* kode 403 yaitu kode untuk *Forbidden*, karena token tidak berhasil untuk di-*generate* maupun di verifikasi secara benar dengan status `*CSRF token missing*`. Karena itu, proses penyimpanan task akan bersifat gagal.
+Perbedaan dari ketiga bahasa ini adalah letak penempatan, cara pemanggilan, sifat pemanggilan, serta urutan prioritas dari CSS itu sendiri.
 
-## Apakah kita dapat membuat elemen `<form>` secara manual (tanpa menggunakan *generator* seperti `{{ form.as_table }})?` Jelaskan secara gambaran besar bagaimana cara membuat `<form>` secara manual.
-
-Tentu saja bisa. Salah satu contohnya adalah HTML dari form yang digunakan untuk aplikasi ini. Form tersebut dibuat dengan menggunakan *method* POST, sehingga dibutuhkan inisiasi CSRF Token dengan kode seperti berikut:
-
-```shell
-...
- <form method="POST" >  
-            {% csrf_token %}
-            ...
-```
-
-Setelah itu, kita dapat menginisiasi tag `<table>` untuk membuat sebuah table yang digunakan untuk proses input form nantinya. Kemudian, kita tinggal mengkonstruksi isi dari tabel tersebut dengan potongan kode `<tr>` dan `<td>` serta tidak lupa untuk menginsiasi input dengan *type*, *name*, dan *value* yang sesuai.
-
-Kemudian, untuk mendefinisikan jenis form, saya membuat *class* form yang disimpan dalam file `forms.py`. Isi dari file ini adalah `class TaskForm` yang menerima parameter ModelForm dari `django.forms`. Didalamnya terdapat `class Meta:` yang akan menerima model Task (berisi task-task user) dan jenis *field* yang akan diterima, yaitu `title` dan `description` berikut:
+### Inline CSS
+*Inline CSS* memiliki penempatan di dalam elemen HTML itu sendiri sebagai sebuah atribut. Misalkan jika kita ingin menulis sebuah teks berjenis h1, maka potongan kodenya seperti berikut:
 
 ```shell
-from django.forms import ModelForm
-from todolist.models import Task
-
-class TaskForm(ModelForm):
-     class Meta:
-         model = Task
-         fields = ['title', 'description']
+<h1>Selamat datang di repositori Rafito Humam</h1>
 ```
 
-Nantinya, *class* ini yang nantinya akan dipanggil dalam views.py pada fungsi `create_task` yang akan mengvalidasi parameter `request` sebagai user yang sesuai dan nantinya direturn dan ditampilkan dalam bentuk html.
+Namun, jika kita ingin memodifikasi visual dari tulisan tersebut dengan warna oranye, maka kita dapat mengimplementasikan *Inline CSS* sebagai atribut dari h1, sebagai berikut:
+
+```shell
+<h1 style="color: orange;">Selamat datang di repositori Rafito Humam</h1>
+```
+
+Kelebihan dari metode ini adalah implementasinya cepat, praktis, dan selalu mendapat prioritas pertama dalam inisiasi. Namun pastinya terdapat kelemahan jika elemen yang ingin dikostumisasi berjumlah banyak, sehingga kita harus mengkostumisasi setiap visual dari masing-masing elemen.
+
+### Internal CSS
+*Internal CSS* memiliki implementasi di dalam elemen `<style>` di bawah lingkup `<head>` dari sebuah HTML. Bentuk CSS seperti ini bersifat lebih universal, karena modifikasi visual berkemungkinan untuk diterapkan ke semua elemen, tidak hanya elemen individual seperti *Inline CSS* saja. Dalam *inline css*, dilakukan Inisiasi selector CSS. Misalkan jika kit ingin melakukan perubahan yang sama seperti *Inline CSS*, maka potongan kodenya adalah sebagai berikut
+
+```shell
+<head>
+    ...
+    <style type="text/css">
+            h1 {
+                background-color: orange;
+            }
+        </style>
+        ...
+</head>
+```
+
+Kelebihan dari metode ini adalah inisiasi visual tidak perlu dilakukan satu-satu per elemen dalam satu halaman,namun jika terdapat banyak halaman HTML akan sulit untuk menyelaraskan setiap halaman dengan baik. Serta dengan banyak potongan kode CSS di setiap awal HTML tidak terlihat rapih.
+
+### External CSS
+Seperti namanya, *External CSS* merupakan implementasi CSS dengan mengambil kode visualisasi dari file external dengan format `.css`, bukan berasal dari file HTML itu sendiri. Pada file `.css`, kita perlu mendefinisikan setiap *selector* dan elemen visualisasinya seperti pada *Internal CSS*, misalkan seperti ini:
+
+```shell
+            h1 {
+                background-color: orange;
+            }
+```
+
+Namun pada file HTML yang ingin kita kostumisasi perlu ditambahkan potongan kode untuk mengambil elemen visualisasi dari file `.css` tersebut, dengan:
+
+```shell
+<head>
+    ...
+    <link rel="stylesheet" type="text/css" href="external.css">
+    ...
+</head>
+```
+
+Kelebihan dari metode ini adalah inisiasi visual tidak perlu dilakukan satu-satu per halaman. Setiap adanya perubahan segi visual, maka akan berubah juga untuk setiap halaman yang melakukan referensi ke file `.css` tersebut sehingga lebih efisien, cepat, dan konsisten. Namun, metode ini memiliki kelemahan jika file `.css` tersebut terjadi masalah atau belum bisa ter-*load* dengan baik, maka semua halaman HTML tidak akan terpampang dengan sempurna pula.
+
+Dalam kasus ini, dimisalkan file tersebut adalah `external.css`.
+
+*Internal CSS* memiliki implementasi di dalam elemen `<style>` di bawah lingkup `<head>` dari sebuah HTML. Bentuk CSS seperti ini bersifat lebih universal, karena modifikasi visual berkemungkinan untuk diterapkan ke semua elemen, tidak hanya elemen individual seperti *Inline CSS* saja. Dalam *inline css*, dilakukan Inisiasi selector CSS. Misalkan jika kit ingin melakukan perubahan yang sama seperti *Inline CSS*, maka potongan kodenya adalah sebagai berikut
+
+```shell
+<head>
+    ...
+    <style type="text/css">
+            h1 {
+                background-color: orange;
+            }
+        </style>
+        ...
+</head>
+```
+
+##  Jelaskan tag HTML5 yang kamu ketahui
+
+HTML merupakan sebuah file representasi halaman yang dipenuhi oleh *tags*. Maka dari itu, jumlah *tags* sangatlah banyak sekali. Adapun beberapa jenis *tag* yang saya ketahui adalah:
+
+### <head> dan <body>
+Kedua *tag* ini adalah *tag* yang sangat penting bagi file HTML. *tag* `<head>`merupakan sebuah kontainer atau tempat penyimpanan dari semua elemen *head* yang diperlukan. Beberapa contohnya adalah `<title>`, `<meta>`, bahkan `<style>` yang mewakili CSS dalam lingkup *tag* `<head>`.
+
+Selain itu, terdapat juga `<body>`, yang merupakan bagian utama yang menampung isi dari dokumen halaman tersebut. Hal ini termasuk dengan setiap teks, gambar, *link*, tabel, *list*, bahkan *iframe*. Semua elemen halaman yang ingin ditampilkan sebagai sebuah data / dokumen akan disisipkan di bawah *tag* `body` ini.
+
+Seperti biasa, tidak lupa untuk menutup setiap *tag* terebut dengan `</head>` maupun `</body>`.
+
+### <h1> hingga <h6>
+*Tag* ini digunakan untuk menulis sebuah teks sebagai *heading*. Sebagai sebuah *heading*, tentunya ukurannya relatif lebih besar dibandingkan sebuah paragraf. Maka dari itu, disediakan berbagai macam ukuran *font* dari *tags* tersebut yang diurutkan dari terbesar (`<h1>`) hingga yang terkecil (`<h6>`) .
+
+### <strong> atau <b>
+*Tag* `<strong>` atau `<b>` biasanya digunakan dalam sebuah tag paragraf (`<p>`) untuk memunculkan efek *bold* atau huruf tebal dalam sebuah teks.
+
+### <ins> atau <u>
+*Tag* `<em>` atau `<i>` biasanya digunakan dalam sebuah tag paragraf (`<p>`) untuk memunculkan efek *italic* atau huruf miring dalam sebuah teks.
+
+### <em> atau <i>
+*Tag* `<ins>` atau `<u>` biasanya digunakan dalam sebuah tag paragraf (`<p>`) untuk memunculkan efek *underline* atau garis bawah dalam sebuah teks.
+
+### <hr>
+*Tag* `<hr>` biasanya digunakan untuk menambahkan garis horizontal dalam sebuah halaman. *Tag* ini dapat digunakan tanpa tag penutup `</hr>`.
+
+### <br>
+*Tag* `<br>` biasanya digunakan untuk menambahkan suatu *line break* atau jeda kosong dalam sebuah teks, layaknya perintah `println("\n")`. *Tag* ini dapat digunakan tanpa tag penutup `</br>`
+
+### <p>
+Berbeda dengan *heading*, *tag* ini digunakan untuk menulis sebuah teks sebagai paragraf. Layaknya sebuah paragraf, *tag* `<p>` digunakan untuk menulis banyak teks yang dimunculkan dalam halaman HTML. Maka dari itu, ukuran *default font* dari *tag* `<p>` relatif lebih kecil dibandingkan heading dengan *tag* `<h1>` hingga `<h6>`.
+
+### `<table>`, `<tr>`, `<th>`, dan `<td>`
+*Tag* `<table>`, `<tr>`, dan `<td>` dan serangkaian tag lainnya (`<tbody>`, `<thead>`, dll.) digunakan untuk membuat sebuah tabel dalam HTML. `<table>` dan `</table>` digunakan untuk inisiasi elemen-elemen tabel, sedangkan `<tr>` digunakan untuk menginisiasi setiap row tabel, `<th>` digunakan untuk *heading* setiap tabel, dan `<td>` untuk menginisasi konten atau data dari tabel.
+
+Selain berbagai *tag* di atas, terdapat beberapa *tag* lain yang mewakili elemen-elemen format HTML, seperti `<div>`, `<span>`, `<ul>`, `<ol>`, dan lainnya.
+
+##  Jelaskan tipe-tipe CSS selector yang kamu ketahui
 
 ## Jelaskan proses alur data dari submisi yang dilakukan oleh pengguna melalui HTML form, penyimpanan data pada database, hingga munculnya data yang telah disimpan pada template HTML.
 
