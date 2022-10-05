@@ -1,42 +1,88 @@
 {% extends 'base.html' %}
 
- {% block content %}
- <style>
-  table, th, td {
-  border: 1px solid rgb(0, 0, 0);
-  }
-  tr {background-color: rgba(0, 0, 0, 0.395);}
+{% block content %}
+<nav class="navbar navbar-light" style="background-color: #ff8c00;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">ToDoList!</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">HOME</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'todolist:create_task' %}">CREATE NEW TASK</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'todolist:logout' %}">LOGOUT</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-  body{
-    color: rgb(255, 255, 255);
-  }
+<style>
+    body {
+      background-image: url("https://i.pinimg.com/originals/38/51/8c/38518cc76d1965753247e4d35f82037a.jpg");
+    }
+    .headingh1h6 {
+      color: white;
+      text-shadow: 2px 2px rgb(0, 0, 0);
+      text-align: center;
+    }
+    .grandParentContaniner {
+      display:table; height:100%; margin: 0 auto;
+    }
+    .parentContainer {
+      display:table-cell; vertical-align:middle;
+    }
+    .button {
+      border-radius: 3px;
+      box-sizing: border-box;
+      cursor: pointer;
+      font-size: 15px;
+      height: 60px;
+      margin-top: 10px;
+      margin-left: 100px;
+      text-align: center;
+      width: 30%;
+    }
+    .card {
+      background-color: #ff8c00;
+      text-align: center;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      transition: 0.3s;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+    .card:hover {
+      transform: translateY(3px);
+    }
+    .container {
+      padding: 20px 10px;
+    }
 </style>
 
-  <h1>Tugas 4 Assignment PBP/PBD</h1>
-
-  <h5>Name: {{username}}</h5>
-
-  <button><a href="{% url 'todolist:create_task' %}">Create New Task</a></button>
-  
-  <table>
-    <tr>
-      <tr></tr>
-      <th>Tanggal</th>
-      <th>Judul Task</th>
-      <th>Deskripsi</th>
-    </tr>
-    {% comment %} Add the data below this line {% endcomment %}
+<div class="grandParentContaniner">
+  <div class="parentContainer">
+    <br>
+    <h1 class="headingh1h6">TO DO LIST</h1>
+    <h6 class="headingh1h6">USERNAME</h6>
+    <h6 class="headingh1h6">{{username}}</h6>
+    <br>
     {% for task in alltask %}
-    <tr>
-      <th>{{task.date}}</th>
-      <th>{{task.title}}</th>
-      <th>{{task.description}}</th>
-    </tr>
+    <div class="card">
+      <div class="container">
+        <h4><b>{{task.title}}</b></h4>
+        <p>{{task.description}}</p>
+        <p>{{task.date}}</p>
+      </div>
+    </div>
     {% endfor %}
-  </table>
-
-  <h5>Sesi terakhir login: {{ last_login }}</h5>
-
-  <button><a href="{% url 'todolist:logout' %}">Logout</a></button>
-
- {% endblock content %}
+    <br>
+    <h6 class="headingh1h6">Sesi terakhir login: {{ last_login }}</h6>
+  </div>
+</div>
+{% endblock content %}

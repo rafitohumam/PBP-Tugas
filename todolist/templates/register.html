@@ -2,25 +2,68 @@
 
 {% block meta %}
 <title>Registrasi Akun</title>
+<style type="text/css">
+      Html, body {
+        height:100%;
+      }
+      .grandParentContaniner {
+        display:table; height:100%; margin: 0 auto;
+      }
+      .parentContainer {
+        display:table-cell; vertical-align:middle;
+      } 
+      body {
+      background-image: url("https://i.pinimg.com/originals/38/51/8c/38518cc76d1965753247e4d35f82037a.jpg");
+      }
+      .submit {
+        border-radius: 3px;
+        box-sizing: border-box;
+        color: rgb(0, 0, 0);
+        cursor: pointer;
+        font-size: 15px;
+        height: 40px;
+        margin-top: 10px;
+        margin-left: 10px;
+        text-align: center;
+        width: 50%;
+      }
+      .submit:hover {
+        box-shadow: 0 0.5em 0.3em -0.2em var(--hover);
+        transform: translateY(-0.15em);
+      }
+      .container {
+        padding: 25px;
+        border-radius: 5px;   
+        background-color: rgb(255, 140, 0);
+        opacity: 100%;  
+      }
+      h1 {
+        color: white;
+        text-shadow: 2px 2px rgb(0, 0, 0);
+        text-align: left;
+      }
+      td {
+        color: white;
+        text-align: left;
+      }
+    </style>
 {% endblock meta %}
 
 {% block content %}  
-
-<div class = "login">
-    
-    <h1>Formulir Registrasi</h1>  
-
+<div class="grandParentContaniner">
+    <div class="parentContainer">
+    <div class="container">
+        <h1>Formulir Registrasi</h1>  
         <form method="POST" >  
             {% csrf_token %}  
             <table>  
-                {{ form.as_table }}  
+                {{form.as_table}}  
                 <tr>  
                     <td></td>
                     <td><input type="submit" name="submit" value="Daftar"/></td>  
                 </tr>  
             </table>  
         </form>
-
-</div>  
-
+    </div> 
+</div>
 {% endblock content %}

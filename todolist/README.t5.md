@@ -88,44 +88,107 @@ Dalam kasus ini, dimisalkan file tersebut adalah `external.css`.
 
 HTML merupakan sebuah file representasi halaman yang dipenuhi oleh *tags*. Maka dari itu, jumlah *tags* sangatlah banyak sekali. Adapun beberapa jenis *tag* yang saya ketahui adalah:
 
-### <head> dan <body>
+### `<head>` dan `<body>`
 Kedua *tag* ini adalah *tag* yang sangat penting bagi file HTML. *tag* `<head>`merupakan sebuah kontainer atau tempat penyimpanan dari semua elemen *head* yang diperlukan. Beberapa contohnya adalah `<title>`, `<meta>`, bahkan `<style>` yang mewakili CSS dalam lingkup *tag* `<head>`.
 
 Selain itu, terdapat juga `<body>`, yang merupakan bagian utama yang menampung isi dari dokumen halaman tersebut. Hal ini termasuk dengan setiap teks, gambar, *link*, tabel, *list*, bahkan *iframe*. Semua elemen halaman yang ingin ditampilkan sebagai sebuah data / dokumen akan disisipkan di bawah *tag* `body` ini.
 
 Seperti biasa, tidak lupa untuk menutup setiap *tag* terebut dengan `</head>` maupun `</body>`.
 
-### <h1> hingga <h6>
+### `<h1>` hingga `<h6>`
 *Tag* ini digunakan untuk menulis sebuah teks sebagai *heading*. Sebagai sebuah *heading*, tentunya ukurannya relatif lebih besar dibandingkan sebuah paragraf. Maka dari itu, disediakan berbagai macam ukuran *font* dari *tags* tersebut yang diurutkan dari terbesar (`<h1>`) hingga yang terkecil (`<h6>`) .
 
-### <strong> atau <b>
+### `<strong>` atau `<b>`
 *Tag* `<strong>` atau `<b>` biasanya digunakan dalam sebuah tag paragraf (`<p>`) untuk memunculkan efek *bold* atau huruf tebal dalam sebuah teks.
 
-### <ins> atau <u>
+### `<ins>` atau `<u>```
 *Tag* `<em>` atau `<i>` biasanya digunakan dalam sebuah tag paragraf (`<p>`) untuk memunculkan efek *italic* atau huruf miring dalam sebuah teks.
 
-### <em> atau <i>
+### `<em>` atau `<i>`
 *Tag* `<ins>` atau `<u>` biasanya digunakan dalam sebuah tag paragraf (`<p>`) untuk memunculkan efek *underline* atau garis bawah dalam sebuah teks.
 
-### <hr>
+### `<hr>`
 *Tag* `<hr>` biasanya digunakan untuk menambahkan garis horizontal dalam sebuah halaman. *Tag* ini dapat digunakan tanpa tag penutup `</hr>`.
 
-### <br>
+### `<br>`
 *Tag* `<br>` biasanya digunakan untuk menambahkan suatu *line break* atau jeda kosong dalam sebuah teks, layaknya perintah `println("\n")`. *Tag* ini dapat digunakan tanpa tag penutup `</br>`
 
-### <p>
+### `<p>`
 Berbeda dengan *heading*, *tag* ini digunakan untuk menulis sebuah teks sebagai paragraf. Layaknya sebuah paragraf, *tag* `<p>` digunakan untuk menulis banyak teks yang dimunculkan dalam halaman HTML. Maka dari itu, ukuran *default font* dari *tag* `<p>` relatif lebih kecil dibandingkan heading dengan *tag* `<h1>` hingga `<h6>`.
 
 ### `<table>`, `<tr>`, `<th>`, dan `<td>`
 *Tag* `<table>`, `<tr>`, dan `<td>` dan serangkaian tag lainnya (`<tbody>`, `<thead>`, dll.) digunakan untuk membuat sebuah tabel dalam HTML. `<table>` dan `</table>` digunakan untuk inisiasi elemen-elemen tabel, sedangkan `<tr>` digunakan untuk menginisiasi setiap row tabel, `<th>` digunakan untuk *heading* setiap tabel, dan `<td>` untuk menginisasi konten atau data dari tabel.
-
+ 
 Selain berbagai *tag* di atas, terdapat beberapa *tag* lain yang mewakili elemen-elemen format HTML, seperti `<div>`, `<span>`, `<ul>`, `<ol>`, dan lainnya.
 
-##  Jelaskan tipe-tipe CSS selector yang kamu ketahui
+## Jelaskan tipe-tipe selector yang kamu ketahui!
+Sesuai dengan namanya, *selector* merupakan cara untuk memilih implementasi dari kode CSS untuk melakukan viasualisasi pada halaman HTML. Biasanya, *selector* tersebut didefinisikan di dalam tag `<style>` dan dapat dipanggil pada setiap elemen HTML. Terdapat beberapa tipe *selector* yang umum diketahui, yaitu:
 
-## Jelaskan proses alur data dari submisi yang dilakukan oleh pengguna melalui HTML form, penyimpanan data pada database, hingga munculnya data yang telah disimpan pada template HTML.
+### Element Selector
+*Element Selector* mewakili pemilihan kostumisasi HTML untuk setiap jenis elemen. Misalkan, jika kita ingin melakukan visualisasi terhadap heading dengan jenis `<h1>`, maka digunakan element selector seperti berikut:
 
-Salah satu contoh submisi data yang terjadi adalah di proses untuk membuat *task* baru. Ketika *user* melakukan klik pada tombol "POST" yang dimuat pada `create_task.html`, maka *input* yang diberikan oleh user akan segera divalidasi menggunakan fungsi `create_task` di `views.py`. Variabel `form` berisi `class TaskForm` yang diambil dari `forms.py` akan memastikan bahwa metode yang digunakan dalah POST. Kemudian, jika data berhasil divalidasi, maka data akan disimpan dengan perintah `form.save()` sesuai dengan logika yang developer inginkan. Dalam kasus ini, data disimpan sebagai models dengan *field* yang disesuaikan sebagai *title* dan *description* dari suatu *task*. Nantinya, data ini akan disimpan sebagai variabel `context` yang dapat dimunculkan dengan delivery ke *template* `todolist.html`.
+```shell
+...
+<style type="text/css">
+		h1 {
+			color: orange;
+		}
+	</style>
+    ...
+```
+
+Jika hal ini diaplikasi, maka setiap heading dengan jenis `<h1>` akan divisualisasi sesuai dengan persyaratan *element selector* di atas dengan warna oranye.
+
+### Class Selector
+*Class Selector* mewakili pemilihan kostumisasi HTML dengan membuat sebuah *class*. *Class* ini dapat berupa kata apapun dengan diawali sebuah titik `.`. *Class* ini kemudian akan dipanggil di setiap inisiasi elemen. Misalkan, saya akan membuat sebuah kostumisasi *class selector* dengan nama *class* orange seperti berikut: 
+
+```shell
+...
+<style type="text/css">
+	.orange {
+		color: orange;
+	}
+</style>
+ ...
+```
+
+Kemudian kostumisasi ini dapat diterapkan ke elemen manapun yang memanggilnya. Sebagai contoh:
+
+```shell
+...
+<body>
+    <h1 class="orange">Selamat datang di repositori Rafito Humam</h1>
+    <p class="orange">Selamat datang di repositori Rafito Humam</p>
+</body>
+    ...
+```
+
+Jika hal ini diaplikasi, maka untuk kedua elemen di atas akan divisualisasi sesuai dengan persyaratan *class selector* di atas dengan warna oranye, walaupun antar kedua elemen tersebut memiliki jenis yang berbeda. *Class selector* juga dapat dipanggil berkali-kali untuk semua jenis elemen.
+
+### ID Selector
+*ID Selector* mewakili pemilihan kostumisasi HTML dengan membuat sebuah *ID*. *ID* ini dapat berupa kata maupun angka apapun dengan diawali sebuah tanda pagar `#`. *Class* ini kemudian akan dipanggil ke hanya tepat satu inisiasi elemen. Misalkan, saya akan membuat sebuah kostumisasi *ID selector* dengan nama *class* orange seperti berikut: 
+
+```shell
+...
+<style type="text/css">
+	#orange {
+		color: orange;
+	}
+</style>
+ ...
+```
+
+Kemudian kostumisasi ini dapat diterapkan hanya tepat satu elemen yang memanggilnya.
+
+```shell
+...
+<body>
+    <h1 id="orange">Selamat datang di repositori Rafito Humam</h1>
+</body>
+    ...
+```
+
+Jika hal ini diaplikasi, maka untuk tepat satu di atas akan divisualisasi sesuai dengan persyaratan *ID selector* di atas dengan warna oranye.
 
 ## Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas!
 
