@@ -22,6 +22,20 @@ def show_todolist(request):
     return render(request, "todolist.html", context)
 
 @login_required(login_url='/todolist/login/')
+def show_todolist(request):
+    context = {
+    'alltask': Task.objects.filter(user = request.user),
+    'username': request.user,
+    'last_login': request.COOKIES['last_login'],
+    }
+    return render(request, "todolist.html", context)
+
+@login_required(login_url='/todolist/login/')
+def show_todolist_json(request):
+    data = BarangWishlist.objects(user = request.user).filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@login_required(login_url='/todolist/login/')
 def create_task(request):
     form = TaskForm(request.POST or None)
     if form.is_valid():
