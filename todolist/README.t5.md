@@ -3,7 +3,7 @@
 ## Rafito Humam Abrar - 2106633626
 ## PBP E
 
-*Klik untuk mengganti Readme Tugas 4, 5, dan 6: [Tugas 4](README.md), [Tugas 5](README.t5.md), [Tugas 6]("README - TWO.md")*
+*Klik untuk mengganti Readme Tugas 4 dan 5: [Tugas 4](README.md), [Tugas 5](README.t5.md)*
 
 Berikut saya lampirkan link dari aplikasi yang berhasil di-*deploy* ke Heroku.
 
@@ -101,7 +101,7 @@ Seperti biasa, tidak lupa untuk menutup setiap *tag* terebut dengan `</head>` ma
 ### `<strong>` atau `<b>`
 *Tag* `<strong>` atau `<b>` biasanya digunakan dalam sebuah tag paragraf (`<p>`) untuk memunculkan efek *bold* atau huruf tebal dalam sebuah teks.
 
-### `<ins>` atau `<u>`
+### `<ins>` atau `<u>```
 *Tag* `<em>` atau `<i>` biasanya digunakan dalam sebuah tag paragraf (`<p>`) untuk memunculkan efek *italic* atau huruf miring dalam sebuah teks.
 
 ### `<em>` atau `<i>`
@@ -192,123 +192,247 @@ Jika hal ini diaplikasi, maka untuk tepat satu di atas akan divisualisasi sesuai
 
 ## Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas!
 
-Untuk mengimplementasikan *checklist* di atas, kita perlu melakukan kostumisasi HTML dan CSS setiap halaman, serta menggunakan *CSS Framework*. Untuk mengimplementasi *source code* dari *CSS Framework*, dalam hal ini adalah *Bootstrap*, perlu ditambahkan potongan cource code *Bootstrap* di HTML utama (`index.html` maupun `base.html`) seperti berikut:
+Pada awal mula, untuk membuat suatu aplikasi baru bernama `todolist` di proyek tugas Django yang sudah digunakan sebelumnya, kita hanya perlu mengetikkan *command* berikut di terminal:
 
-```shell
-<head>
-    ...
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    ...
-</head>
+```python
+python manage.py startapp todolist
 ```
 
-```shell
-<body>
-    ...
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    ...
-</body>
+Setelah itu, folder `todolist` akan segera terbuat dan dapat dimodifikasi lebih lanjut.
+
+Kedua, untuk menambahkan *path* atau *routing* untuk aplikasi `todolist` dapat dilakukan dengan mengisi *command* berikut di file `urls.py` yang terdapat pada lingkup ```prodject-django```:
+
+```python
+path('todolist/', include('todolist.urls'))
 ```
 
-Hal ini akan berguna untuk menambahkan elemen-elemen HTML yang sudah terdapat di *source code* Bootstrap agar bisa dipakai di dalam halaman HTML.
+Ketiga, menambahkan *models* di file `models.py` dengan setiap *field* yang sesuai dengan konten yang diharapkan. Isi dari file `models.py` adalah sebagai berikut:
 
-Kemudian, saya melakukan visualisasi dari setiap halaman `todolist` agar sesuai dengan selera saya. Pada tugas 5, saya menggunakan *color scheme* berwarna oranye dan hitam. Adapun untuk menyusun tema seperti berikut, perlu mendefinisikan beberapa *Internal CSS* di dalam tag `<style></style>` dan perubahan di kode HTML itu sendiri. Salah satu contohnya adalah `Internal CSS` dalam file `login.html`:
+```python
+from django.db import models
+from django.contrib.auth.models import User
 
-```shell
-<style type="text/css">
-      Html, body {
-        height:100%;
-      }
-      .grandParentContaniner {
-        display:table; height:100%; margin: 0 auto;
-      }
-      .parentContainer {
-        display:table-cell; vertical-align:middle;
-      } 
-      body {
-        background-image: url("https://i.pinimg.com/originals/38/51/8c/38518cc76d1965753247e4d35f82037a.jpg");
-      }
-      .submit {
-        border-radius: 3px;
-        box-sizing: border-box;
-        color: rgb(0, 0, 0);
-        cursor: pointer;
-        font-size: 15px;
-        height: 40px;
-        margin-top: 10px;
-        margin-left: 10px;
-        text-align: center;
-        width: 50%;
-      }
-      .submit:hover {
-        box-shadow: 0 0.5em 0.3em -0.2em var(--hover);
-        transform: translateY(-0.15em);
-      }
-      .container {
-        padding: 25px;
-        border-radius: 5px;   
-        background-color: rgb(255, 140, 0);
-        opacity: 100%;  
-      }
-      h1 {
-        color: white;
-        text-shadow: 2px 2px rgb(0, 0, 0);
-        text-align: center;
-      }
+# Create your models here.
+class Task(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField()
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+```
+
+Hal tersebut dilakukan untuk menginisiasi berbagai models seperti *user*, *date*, *title*, dan *description* sesuai dengan konten `todolist` nantinya. Setelah itu, jangan lupa untuk melakukan migrasi skema model dengan mengetikkan `python manage.py makemigrations` dan `python manage.py migrate` di terminal.
+
+Keempat, untuk menimplementasikan form *registrasi*, *login*, dan *logout*, serta tombol *create new task* perlu modifikasi dan penambahan dari file `views.py`, `urls.py`, `forms.py`, serta pembuatan template `.html` yaitu `login.html`, `new_task.html` serta `register.html`.
+
+### views.py
+
+```python
+import datetime
+from urllib import request
+from todolist.models import Task
+from django.shortcuts import render
+from django.shortcuts import redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from todolist.forms import TaskForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+# Create your views here
+@login_required(login_url='/todolist/login/')
+def show_todolist(request):
+    context = {
+    'alltask': Task.objects.filter(user = request.user),
+    'username': request.user,
+    'last_login': request.COOKIES['last_login'],
+    }
+    return render(request, "todolist.html", context)
+
+@login_required(login_url='/todolist/login/')
+def create_task(request):
+    form = TaskForm(request.POST or None)
+    if form.is_valid():
+        form.instance.user = request.user
+        form.instance.date = datetime.date.today()
+        form.save()
+        response = HttpResponseRedirect(reverse("todolist:show_todolist"))
+        return response
+
+    context = {'form': form}
+    return render(request, "new_task.html", context)
+
+def register(request):
+    form = UserCreationForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Akun telah berhasil dibuat!')
+        return redirect('todolist:login')
+    
+    context = {'form':form}
+    return render(request, 'register.html', context)
+
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user) # melakukan login terlebih dahulu
+            response = HttpResponseRedirect(reverse("todolist:show_todolist")) # membuat response
+            response.set_cookie('last_login', str(datetime.datetime.now())) # membuat cookie last_login dan menambahkannya ke dalam response
+            return response
+        else:
+            messages.info(request, 'Username atau Password salah!')
+    context = {}
+    return render(request, 'login.html', context)
+
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('todolist:login'))
+    response.delete_cookie('last_login')
+    return response
+```
+Pada `views.py`, diperlukan penambahan fungsi `register`, `login_user`, `logout_user` sesuai dengan instruksi pada Lab 03 beserta mekanisme untuk menerapkan restriksi serta *cookies* setiap *user*. Kemudian, untuk `create_task` dibuat untuk meng-*handle* serta validasi form pembuatan *task*, seperti berikut:
+
+```python
+@login_required(login_url='/todolist/login/')
+def create_task(request):
+    form = TaskForm(request.POST or None)
+    if form.is_valid():
+        form.instance.user = request.user
+        form.instance.date = datetime.date.today()
+        form.save()
+        response = HttpResponseRedirect(reverse("todolist:show_todolist"))
+        return response
+
+    context = {'form': form}
+    return render(request, "new_task.html", context)
+```
+
+Fungsi ini akan menerima parameter *request* dan akan melakukan validasi jika `class TaskForm` menggunakan metode POST, kemudian melanjutkan untuk validasi dari setiap data yang di-*pass* oleh form *task* tersebut. Form tersebut nantinya akan menjadi *models* dengan *fields* dari *title* dan *description*. Kemudian, fungsi tersebut juga menarik nilai nama *user* dan waktu ketika task dibuat dan disimpan pada model *user* serta *date*. Lalu akan dilakukan perintah *form.save()* yang akan menyimpan setiap *models* agar kemudian dijadikan sebuah *response* yang akan mengarahkan *models* tersebut untuk di-*render* sebagai *context* di fungsi `show_todolist`.
+
+### urls.py
+
+Pada file `urls.py`, perlu ditambahkan beberapa baris *path* di `urlpatterns` tersebut agar *routing* dari setiap fungsi dan aplikasi akan berjalan dengan sesuai.
+
+```python
+from django.urls import path
+from todolist.views import show_todolist, register, login_user, logout_user, create_task
+app_name = 'todolist'
+
+urlpatterns = [
+    path('', show_todolist, name='show_todolist'),
+    path('register/', register, name='register'),
+    path('login/', login_user, name='login'),
+    path('logout/', logout_user, name='logout'),
+    path('create-task/', create_task, name='create_task'),
+]
+```
+
+### forms.py
+
+`forms.py` dibuat untuk menyimpan *class* *ModelForm* bernama `TaskForm` yang berfungsi untuk melakukan *updating* dari setiap *models* dan *field* yang sesuai untuk form `create_task`, dalam hal ini adalah dua jenis *field*, yaitu `title` dan `description`. Untuk implementasi kodenya daalah sebagai berikut:
+
+```python
+from django.forms import ModelForm
+from todolist.models import Task
+
+# Create the form class
+class TaskForm(ModelForm):
+     class Meta:
+         model = Task
+         fields = ['title', 'description']
+```
+
+### template files (.html)
+
+Dalam implementasi *template* kali ini, dibutuhkan *template* `login.html` dan `register.html` sebagai *template* untuk halaman *login* dan *register* *user*. Kemudian, untuk isi dari `todolist.html` adalah sebagai berikut:
+
+```python
+{% extends 'base.html' %}
+
+ {% block content %}
+ <style>
+  table, th, td {
+  border: 1px solid rgb(0, 0, 0);
+  }
+  tr {background-color: rgba(0, 0, 0, 0.395);}
+
+  body{
+    color: rgb(255, 255, 255);
+  }
 </style>
-```
 
-Adapun kode tersebut digunakan untuk menampilkan sebuah *wrapper container* untuk *form login*, menampilkan elemen-elemen di tengah halaman, serta kostumisasi setiap teks agar sesuai dengan kesesuaian dari tema website. Hal ini terus dilakukan untuk setiap halaman HTML (`login.html`, `register.html`, `new_task.hml`, dan `todolist.html`) agar setiap halaman dituntut untuk kesesuaian tema dari satu sama lain.
+  <h1>Tugas 4 Assignment PBP/PBD</h1>
 
-Hal yang berbeda adalah pada `todolist.html`, karena terdapat tambahan implementasi untuk menambahkan elemen `cards` seperti berikut:
+  <h5>Name: {{username}}</h5>
 
-CSS
-
-```shell
-    ...
-    .card {
-      background-color: #ff8c00;
-      text-align: center;
-      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-      transition: 0.3s;
-      border-radius: 5px;
-      margin-bottom: 15px;
-    }
-    .card:hover {
-      transform: translateY(3px);
-    }
-    .container {
-      padding: 20px 10px;
-    }
-    ...
-```
-
-Untuk HTMLnya, perlu ditambahkan `<div>` dari class tersebut untuk *for-loop* yang didefinisikan untuk printing kegiatan, seperti berikut:
-
-```shell
-    ...
-    <br>
-    .{% for task in alltask %}
-    <div class="card">
-      <div class="container">
-        <h4><b>{{task.title}}</b></h4>
-        <p>{{task.description}}</p>
-        <p>{{task.date}}</p>
-      </div>
-    </div>
+  <button><a href="{% url 'todolist:create_task' %}">Create New Task</a></button>
+  
+  <table>
+    <tr>
+      <tr></tr>
+      <th>Tanggal</th>
+      <th>Judul Task</th>
+      <th>Deskripsi</th>
+    </tr>
+    {% comment %} Add the data below this line {% endcomment %}
+    {% for task in alltask %}
+    <tr>
+      <th>{{task.date}}</th>
+      <th>{{task.title}}</th>
+      <th>{{task.description}}</th>
+    </tr>
     {% endfor %}
-    <br>
-    ...
+  </table>
+
+  <h5>Sesi terakhir login: {{ last_login }}</h5>
+
+  <button><a href="{% url 'todolist:logout' %}">Logout</a></button>
+
+ {% endblock content %}
 ```
 
-Untuk membuat keempat halaman menjadi *responsive*, setiap kostumisasi CSS harus memiliki atribut yang menyesuaikan dengan setiap *resolusi* dari device yang berbeda. Untuk *Bootstrap*, perlu didefinisikan potongan kode tersebut agar elemen yang dihasilkan bersifat responsif:
+Hal yang perlu diperhatikan adalah menambahkan dua tombol yaitu *Create New Task* serta *Logout* dengan kode `<button><a href="{% url 'todolist:create_task' %}">Create New Task</a></button>` serta `<button><a href="{% url 'todolist:logout' %}">Logout</a></button>`. Kemudian, perlu disesuaikan setioap variabel agar dapat mengakses setiap *models* secara benar dan melakukan *printing* informasi ke pengguna secara benar dan jelas.
 
-```shell
-    <head>
-        ...
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        ...
-    </head>
+Adapun untuk `new_task.html` memiliki peran sebagai *template* halaman pengisian *task* baru, sehingga setiap *models* harus disesuaikan agar setiap *title* dan *description* dapat tersimpan dengan benar. Jangan lupa untuk membuat form dengan metode POST serta melakukan *generate* serta validasi CSRF token dengan kode `<form method="POST" >` dan `{% csrf_token %}` seperti berikut:
+
+```python
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Create Task</title>
+{% endblock meta %}
+
+{% block content %}  
+
+<div class = "login">
+    <h1>Create New Task</h1>  
+
+        <form method="POST" >  
+            {% csrf_token %}  
+            <table>  
+                <tr>
+                    <td>Title: </td>
+                    <td>{{form.title}}</td>
+                </tr>
+                        
+                <tr>
+                    <td>Description: </td>
+                    <td>{{form.description}}</td>
+                </tr>
+                <tr>  
+                    <td></td>
+                    <td><input type="submit" name="submit" value="POST"/></td>  
+                </tr>  
+            </table>  
+        </form>
+
+</div>
+
+{% endblock content %}
 ```
 
 ### Deployment ke Aplikasi Heroku
@@ -319,9 +443,19 @@ Untuk melakukan *deployment* ke aplikasi Heroku, diperlukan untuk membuat aplika
 
 Setelah *deployment* dilakukan, aplikasi katalog tersebut dapat diakses di link disini.
 
-[LINK APLIKASI TUGAS 5](https://tugas3-rafitohumam.herokuapp.com/todolist/ "App Heroku Tugas 5 - todolist")
+[LINK APLIKASI TUGAS 4](https://tugas3-rafitohumam.herokuapp.com/todolist/ "App Heroku Tugas 4 - Katalog")
+
+Adapaun untuk test, saya telah membuat dua akun dummy dan telah membuat tiga task yang dapat diakses dengan *credentials* seperti berikut:
+
+```shell
+username: dummy1
+password: rafitomanis234
+
+username: dummy2
+password: rafitomanis234
+```
 
 ## Daftar Pustaka
 
 Template ini dibuat berdasarkan [Repositori Template Lab PBP](https://github.com/pbp-fasilkom-ui/assignment-repository).
-Beberapa materi didapat dari [Tutorial 4 PBP](https://pbp-fasilkom-ui.github.io/ganjil-2023/assignments/tutorial/tutorial-4), [Pembelajaran HTML](https://www.youtube.com/watch?v=tVBuw-RkUU4&ab_channel=BelajarCoding), [Pembelajaran CSS](https://www.youtube.com/watch?v=r9xO1ZafoW4&t=2876s&ab_channel=BelajarCoding), [Membuat Vertical Align Elemen](https://blog.e-zest.com/tutorial-how-to-vertical-center-align-a-login-form-or-container-div/), serta [Membuat Cards](https://www.w3schools.com/howto/howto_css_cards.asp).
+Beberapa materi didapat dari [Tutorial 3 PBP](https://pbp-fasilkom-ui.github.io/ganjil-2023/assignments/tutorial/tutorial-3), [HTML Code Library](https://www.quackit.com/html/codes/html_code_library.cfm), serta [Penjelasan ModelForm](https://docs.djangoproject.com/en/4.1/topics/forms/modelforms/).

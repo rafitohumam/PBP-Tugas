@@ -3,8 +3,6 @@
 ## Rafito Humam Abrar - 2106633626
 ## PBP E
 
-*Klik untuk mengganti Readme Tugas 4, 5, dan 6: [Tugas 4](README.md), [Tugas 5](README.t5.md), [Tugas 6]("README - TWO.md")*
-
 Berikut saya lampirkan link dari aplikasi yang berhasil di-*deploy* ke Heroku.
 
 [LINK APLIKASI TUGAS 6](https://tugas3-rafitohumam.herokuapp.com/todolist/ "App Heroku Tugas 5 - todolist")
