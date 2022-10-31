@@ -60,15 +60,17 @@
     .container {
       padding: 20px 10px;
     }
-    .wrapper {
+    .here {
+    }
+    /*.wrapper {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       row-gap: 3px;
       column-gap: 3px;
-    }
+    }*/
 </style>
 
-<script type="text/javascript">
+<script>
     $(document).ready(() => {
         get_task();
     })
@@ -78,36 +80,33 @@
             type: "POST",
             url: "/todolist/create-task/",
             data: form.serialize(),
-        }).done(function (data) {
+        }).done(function(data) {
             form.trigger("reset");
             get_task();
         });
         $("#staticBackdrop").modal("hide");
     }
-
     function get_task() {
         $.ajax({
             type: "GET",
             url: "/todolist/json/"
         }).done((data) => {
-            putTaskList(data);
+            renderTask(data);
         });
     }
-
-    function putTaskList(data) {
-        const displayTable = $('.wrapper');
-        displayTable.empty();
+    function renderTask(data) {
+        const individualCards = $('.here');
         data.forEach(task => {
-            const taskCard = 
-            `<div class="card">
+            const taskCard = `
+            <div class="card">
               <div class="container">
-                <h4><b>{{task.title}}</b></h4>
-                <p>{{task.fields.description}}</p>
-                <p>{{task.date}}</p>
+                <h4><b>${task.fields.title}</b></h4>
+                <p>${task.fields.description}</p>
+                <p>${task.fields.date}</p>
               </div>
             </div>`
-            ;
-            displayTable.append(taskCard);
+        ;
+            individualCards.append(taskCard);
         })
     };
 </script>
@@ -158,7 +157,9 @@
     <br>
     <h3 class="headingstyle"><button type="button" class="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Create a new task</button></h3>
     <br>
-    {% for task in alltask %}
+    <div class="here">
+    </div>
+    <!-- {% for task in alltask %}
     <div class="card">
       <div class="container">
         <h4><b>{{task.title}}</b></h4>
@@ -166,9 +167,9 @@
         <p>{{task.date}}</p>
       </div>
     </div>
-    {% endfor %}
+    {% endfor %} -->
     <br>
-    <h6 class="headingstyle">Sesi terakhir login: {{ last_login }}</h6>
+    <h6 class="headingstyle">Sesi terakhir login: {{last_login}}</h6>
   </div>
 </div>
 {% endblock content %}

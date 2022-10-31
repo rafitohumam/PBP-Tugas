@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 
- {% block content %}
+{% block meta %}
  <style>
   table, th, td {
   border: 1px solid rgb(0, 0, 0);
   }
   tr {background-color: rgba(0, 0, 0, 0.395);}
-
   body{
     color: rgb(255, 255, 255);
+    background-image: url("https://i.pinimg.com/originals/38/51/8c/38518cc76d1965753247e4d35f82037a.jpg");
   }
 </style>
+{% endblock meta %}
 
+{% block content %}
   <h1>Tugas 3 Assignment PBP/PBD</h1>
 
   <h5>Name: </h5>
@@ -43,5 +45,4 @@
         </tr>
   {% endfor %}
   </table>
-
- {% endblock content %}
+{% endblock content %}
