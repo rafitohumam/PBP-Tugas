@@ -8,8 +8,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from todolist.forms import TaskForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from django.core import serializers
 
 # Create your views here
 @login_required(login_url='/todolist/login/')
@@ -32,7 +33,7 @@ def show_todolist(request):
 
 @login_required(login_url='/todolist/login/')
 def show_todolist_json(request):
-    data = BarangWishlist.objects(user = request.user).filter(pk=id)
+    data = Task.objects.filter(user = request.user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 @login_required(login_url='/todolist/login/')
@@ -73,6 +74,7 @@ def login_user(request):
     context = {}
     return render(request, 'login.html', context)
 
+@login_required(login_url='/todolist/login/')
 def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse('todolist:login'))

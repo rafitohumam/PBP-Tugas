@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
-{% block meta %}
+<script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+{% block content %}
 <nav class="navbar navbar-light" style="background-color: #ff8c00;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">ToDoList!</a>
@@ -11,6 +17,9 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">HOME</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'todolist:create_task' %}">CREATE NEW TASK</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'todolist:logout' %}">LOGOUT</a>
@@ -24,7 +33,7 @@
     body {
       background-image: url("https://i.pinimg.com/originals/38/51/8c/38518cc76d1965753247e4d35f82037a.jpg");
     }
-    .headingstyle {
+    .headingh1h6 {
       color: white;
       text-shadow: 2px 2px rgb(0, 0, 0);
       text-align: center;
@@ -111,9 +120,20 @@
         })
     };
 </script>
-{% endblock meta %}
 
-{% block content %}
+<h2>User in session : {{user}} </h2>
+<h5>{{user}}'s List of Tasks </h5>
+<h3><button type="button" class="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Create a new task</button></h3>
+<body style="background-image: url(https://www.wallpaperuse.com/wallp/26-264578_m.jpg);">
+  
+
+    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+    <div class="wrapper">
+
+</div>
+</div>
+
+
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -132,6 +152,7 @@
                 name="title" ></h3>
                 <label for="floatingInput">Title</label>
               </div>
+            
               <div class="card-body" style="padding-left:0.5%;margin-top: 5px;margin-bottom: 5px;">
               <h3><textarea 
                 class="form-control" 
@@ -149,14 +170,18 @@
   </div>
 </div>  
 
+<h3><button class ="submit"><a href="{% url 'todolist:logout' %}" style="color:aliceblue ;">Logout</a></button></h3>
+<h3>Sesi terakhir login : {{last_login}}</h3>
+
+
+</body>
+
 <div class="grandParentContaniner">
   <div class="parentContainer">
     <br>
-    <h1 class="headingstyle">TO DO LIST</h1>
-    <h6 class="headingstyle">USERNAME</h6>
-    <h6 class="headingstyle">{{username}}</h6>
-    <br>
-    <h3 class="headingstyle"><button type="button" class="submit" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Create a new task</button></h3>
+    <h1 class="headingh1h6">TO DO LIST</h1>
+    <h6 class="headingh1h6">USERNAME</h6>
+    <h6 class="headingh1h6">{{username}}</h6>
     <br>
     {% for task in alltask %}
     <div class="card">
@@ -168,7 +193,7 @@
     </div>
     {% endfor %}
     <br>
-    <h6 class="headingstyle">Sesi terakhir login: {{ last_login }}</h6>
+    <h6 class="headingh1h6">Sesi terakhir login: {{ last_login }}</h6>
   </div>
 </div>
 {% endblock content %}
